@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>game</title>
+
+    <!-- google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap"
+      rel="stylesheet" />
+
+    <!-- stylesheet -->
+    <style>
+      /* common styling */
+      .active {
+        display: block;
+      }
+      .inactive {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- screen 1: player 1 (name input) -->
+    <div class="active screenOne">
+      <h1 class="headingOne">player 1: enter your name</h1>
+      <input class="nameOne" type="text" />
+      <button class="buttonOne">next</button>
+      <h3 class="inactive errorOne">error: name not found</h3>
+    </div>
+
+    <!-- screen 2: player 1 (number input) -->
+    <div class="inactive screenTwo">
+      <h1 class="headingTwo"></h1>
+      <input class="numberOne" type="number" />
+      <button class="buttonTwo">next</button>
+      <h3 class="inactive errorTwo">error: number not found</h3>
+      <h3 class="inactive errorThree">error: number must be in between 1-9</h3>
+    </div>
+
+    <!-- screen 3: player 2 (name input) -->
+    <div class="inactive screenThree">
+      <h1 class="headingOne">player 2: enter your name</h1>
+      <input class="nameTwo" type="text" />
+      <button class="buttonThree">next</button>
+      <h3 class="inactive errorOne">error: name not found</h3>
+    </div>
+
+    <!-- screen 4: player 2 (number input) -->
+    <div class="inactive screenFour">
+      <h1 class="headingThree"></h1>
+      <input class="numberTwo" type="number" />
+      <button class="buttonFour">next</button>
+      <h3 class="inactive errorTwo">error: number not found</h3>
+      <h3 class="inactive errorThree">error: number must be in between 1-9</h3>
+    </div>
+
+    <!-- screen 5: result -->
+    <div class="inactive screenFive">
+      <h1 class="headingFour"></h1>
+    </div>
+
+    <!-- javascript -->
+    <script>
+      // names
+      const nameOne = document.querySelector(".nameOne");
+      const nameTwo = document.querySelector(".nameTwo");
+
+      // numbers
+      const numberOne = document.querySelector(".numberOne");
+      const numberTwo = document.querySelector(".numberTwo");
+
+      // visibility
+      const inactive = document.querySelector(".inactive");
+      const active = document.querySelector(".active");
+
+      //headings
+      const headingOne = document.querySelector(".headingOne");
+      const headingTwo = document.querySelector(".headingTwo");
+      const headingThree = document.querySelector(".headingThree");
+      const headingFour = document.querySelector(".headingFour");
+
+      // buttons
+      const buttonOne = document.querySelector(".buttonOne");
+      const buttonTwo = document.querySelector(".buttonTwo");
+      const buttonThree = document.querySelector(".buttonThree");
+      const buttonFour = document.querySelector(".buttonFour");
+
+      // screens
+      const screenOne = document.querySelector(".screenOne");
+      const screenTwo = document.querySelector(".screenTwo");
+      const screenThree = document.querySelector(".screenThree");
+      const screenFour = document.querySelector(".screenFour");
+      const screenFive = document.querySelector(".screenFive");
+
+      // screen 1: player 1 (name input)
+      buttonOne.addEventListener("click", () => {
+        const errorOne = screenOne.querySelector(".errorOne");
+        if (nameOne.value == "") {
+          errorOne.classList.remove("inactive");
+          errorOne.classList.add("active");
+        } else {
+          errorOne.classList.remove("active"); // Hide error
+          errorOne.classList.add("inactive");
+          screenOne.classList.remove("active");
+          screenOne.classList.add("inactive");
+          headingTwo.innerHTML = `hey ${nameOne.value}, enter a number between 1-9`;
+          screenTwo.classList.remove("inactive");
+          screenTwo.classList.add("active");
+        }
+      });
+
+      // screen 2: player 1 (number input)
+      buttonTwo.addEventListener("click", () => {
+        const errorTwo = screenTwo.querySelector(".errorTwo");
+        const errorThree = screenTwo.querySelector(".errorThree");
+        if (numberOne.value == "") {
+          errorTwo.classList.remove("inactive");
+          errorTwo.classList.add("active");
+          errorThree.classList.remove("active");
+          errorThree.classList.add("inactive");
+        } else if (numberOne.value < 1 || numberOne.value > 9) {
+          errorTwo.classList.remove("active");
+          errorTwo.classList.add("inactive");
+          errorThree.classList.remove("inactive");
+          errorThree.classList.add("active");
+        } else {
+          errorTwo.classList.remove("active");
+          errorTwo.classList.add("inactive");
+          errorThree.classList.remove("active");
+          errorThree.classList.add("inactive");
+          screenTwo.classList.remove("active");
+          screenTwo.classList.add("inactive");
+          screenThree.classList.remove("inactive");
+          screenThree.classList.add("active");
+        }
+      });
+
+      // screen 3: player 2 (name input)
+      buttonThree.addEventListener("click", () => {
+        const errorOne = screenThree.querySelector(".errorOne");
+        if (nameTwo.value == "") {
+          errorOne.classList.remove("inactive");
+          errorOne.classList.add("active");
+        } else {
+          errorOne.classList.remove("active"); // Hide error
+          errorOne.classList.add("inactive");
+          screenThree.classList.remove("active");
+          screenThree.classList.add("inactive");
+          headingThree.innerHTML = `hey ${nameTwo.value}, enter a number between 1-9`;
+          screenFour.classList.remove("inactive");
+          screenFour.classList.add("active");
+        }
+      });
+
+      // screen 4: player 2 (number input)
+      buttonFour.addEventListener("click", () => {
+        const errorTwo = screenFour.querySelector(".errorTwo");
+        const errorThree = screenFour.querySelector(".errorThree");
+        if (numberTwo.value == "") {
+          errorTwo.classList.remove("inactive");
+          errorTwo.classList.add("active");
+          errorThree.classList.remove("active");
+          errorThree.classList.add("inactive");
+        } else if (numberTwo.value < 1 || numberTwo.value > 9) {
+          errorTwo.classList.remove("active");
+          errorTwo.classList.add("inactive");
+          errorThree.classList.remove("inactive");
+          errorThree.classList.add("active");
+        } else {
+          errorTwo.classList.remove("active");
+          errorTwo.classList.add("inactive");
+          errorThree.classList.remove("active");
+          errorThree.classList.add("inactive");
+          screenFour.classList.remove("active");
+          screenFour.classList.add("inactive");
+          screenFive.classList.remove("inactive");
+          screenFive.classList.add("active");
+        }
+        if (numberOne.value == numberTwo.value) {
+          headingFour.innerHTML = `${nameTwo.value} won the game`;
+        } else {
+          headingFour.innerHTML = `${nameOne.value} won the game`;
+        }
+      });
+    </script>
+  </body>
+</html>
