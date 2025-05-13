@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>game</title>
+    <title>Number Guess Game</title>
 
     <!-- google fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,53 +14,237 @@
 
     <!-- stylesheet -->
     <style>
-      /* common styling */
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Fira Code", monospace;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        color: #fff;
+        padding: 20px;
+      }
+
+      /* Screen visibility */
       .active {
         display: block;
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.5s ease, transform 0.5s ease;
       }
+
       .inactive {
         display: none;
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      /* Game container */
+      .screenOne,
+      .screenTwo,
+      .screenThree,
+      .screenFour,
+      .screenFive {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 30px;
+        max-width: 500px;
+        width: 100%;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        margin: 20px 0;
+      }
+
+      /* Title */
+      .game-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #ffd700;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        margin-bottom: 20px;
+        animation: fadeIn 1s ease-in;
+      }
+
+      /* Headings */
+      h1 {
+        font-size: 1.8rem;
+        color: #1e3c72;
+        margin-bottom: 20px;
+        font-weight: 500;
+      }
+
+      /* Inputs */
+      input[type="text"],
+      input[type="number"] {
+        width: 100%;
+        max-width: 300px;
+        padding: 12px;
+        margin: 10px 0;
+        border: 2px solid #2a5298;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: "Fira Code", monospace;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #ffd700;
+        box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+      }
+
+      /* Buttons */
+      button {
+        padding: 12px 24px;
+        margin: 10px;
+        background: #2a5298;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-family: "Fira Code", monospace;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s ease;
+      }
+
+      button:hover {
+        background: #1e3c72;
+        transform: translateY(-2px);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      /* Error messages */
+      .errorOne,
+      .errorTwo,
+      .errorThree {
+        color: #e63946;
+        font-size: 0.9rem;
+        margin: 10px 0;
+        font-weight: 400;
+        animation: shake 0.3s ease;
+      }
+
+      /* Result screen */
+      .screenFive h1 {
+        color: #2a5298;
+        font-size: 2rem;
+        margin-bottom: 20px;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        75% {
+          transform: translateX(5px);
+        }
+      }
+
+      /* Responsive design */
+      @media (max-width: 600px) {
+        .game-title {
+          font-size: 2rem;
+        }
+
+        .screenOne,
+        .screenTwo,
+        .screenThree,
+        .screenFour,
+        .screenFive {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+          max-width: 250px;
+        }
       }
     </style>
   </head>
   <body>
+    <!-- Game title -->
+    <h1 class="game-title">Number Guess Game</h1>
+
     <!-- screen 1: player 1 (name input) -->
     <div class="active screenOne">
-      <h1 class="headingOne">player 1: enter your name</h1>
-      <input class="nameOne" type="text" />
-      <button class="buttonOne">next</button>
-      <h3 class="inactive errorOne">error: name not found</h3>
+      <div class="content">
+        <h1 class="headingOne">Player 1: Enter Your Name</h1>
+        <input class="nameOne" type="text" placeholder="Your name" />
+        <button class="buttonOne">Next</button>
+        <h3 class="inactive errorOne">Error: Name not found</h3>
+      </div>
     </div>
 
     <!-- screen 2: player 1 (number input) -->
     <div class="inactive screenTwo">
-      <h1 class="headingTwo"></h1>
-      <input class="numberOne" type="number" />
-      <button class="buttonTwo">next</button>
-      <h3 class="inactive errorTwo">error: number not found</h3>
-      <h3 class="inactive errorThree">error: number must be in between 1-9</h3>
+      <div class="content">
+        <h1 class="headingTwo"></h1>
+        <input class="numberOne" type="number" placeholder="Enter 1-9" />
+        <button class="buttonTwo">Next</button>
+        <h3 class="inactive errorTwo">Error: Number not found</h3>
+        <h3 class="inactive errorThree">Error: Number must be between 1-9</h3>
+      </div>
     </div>
 
     <!-- screen 3: player 2 (name input) -->
     <div class="inactive screenThree">
-      <h1 class="headingOne">player 2: enter your name</h1>
-      <input class="nameTwo" type="text" />
-      <button class="buttonThree">next</button>
-      <h3 class="inactive errorOne">error: name not found</h3>
+      <div class="content">
+        <h1 class="headingOne">Player 2: Enter Your Name</h1>
+        <input class="nameTwo" type="text" placeholder="Your name" />
+        <button class="buttonThree">Next</button>
+        <h3 class="inactive errorOne">Error: Name not found</h3>
+      </div>
     </div>
 
     <!-- screen 4: player 2 (number input) -->
     <div class="inactive screenFour">
-      <h1 class="headingThree"></h1>
-      <input class="numberTwo" type="number" />
-      <button class="buttonFour">next</button>
-      <h3 class="inactive errorTwo">error: number not found</h3>
-      <h3 class="inactive errorThree">error: number must be in between 1-9</h3>
+      <div class="content">
+        <h1 class="headingThree"></h1>
+        <input class="numberTwo" type="number" placeholder="Enter 1-9" />
+        <button class="buttonFour">Next</button>
+        <h3 class="inactive errorTwo">Error: Number not found</h3>
+        <h3 class="inactive errorThree">Error: Number must be between 1-9</h3>
+      </div>
     </div>
 
     <!-- screen 5: result -->
     <div class="inactive screenFive">
-      <h1 class="headingFour"></h1>
+      <div class="content">
+        <h1 class="headingFour"></h1>
+        <button class="buttonReset">Play Again</button>
+      </div>
     </div>
 
     <!-- javascript -->
